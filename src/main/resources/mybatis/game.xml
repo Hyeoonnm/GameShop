@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="game">
+
+    <select id="total" resultType="Integer">
+        SELECT COUNT(*)
+        FROM game
+    </select>
+
+    <select id="list" resultType="Game">
+        SELECT game.*, member.name, publisher.name publisher
+        FROM game
+                 LEFT JOIN member ON game.member_id = member.id
+                 LEFT JOIN publisher ON game.publisher_id = publisher.id
+        ORDER BY id
+        LIMIT ${offset}, ${perPage}
+    </select>
+
+    <insert id="add">
+        INSERT INTO game
+        (title, price, reg_date, pub_date, member_id, publisher_id, contents)
+        VALUES (#{title}, #{price}, NOW(), #{pubDate}, #{memberId}
+
+        <if test="publisherId == 0">,NULL</if>
+        <if test="publisherId != 0">,#{publisherId}</if>
+
+        ,#{contents})
+
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM game
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="delete_member">
+        DELETE
+        FROM game
+        WHERE id = #{id}
+          AND member_id = #{memberId}
+    </delete>
+
+    <resultMap type="Game" id="GameMap" autoMapping="true">
+        <id column="id" property="id"/>
+        <collection property="attachs" column="game_id" ofType="Attach" javaType="ArrayList" autoMapping="true">
+            <id column="attach_id" property="id"/>
+        </collection>
+    </resultMap>
+
+    <select id="item" resultMap="GameMap">
+        SELECT game.*, attach.id attach_id, game_id, filename
+        FROM game
+                 LEFT JOIN attach ON game.id = attach.game_id
+        WHERE game.id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE game
+        SET title=#{title}, price=#{price}, pub_date=#{pubDate}, contents=#{contents}
+
+        <if test="publisherId != 0">, publisher_id=#{publisherId}</if>
+
+        WHERE id=#{id} AND member_id=#{memberId}
+    </update>
+
+</mapper>

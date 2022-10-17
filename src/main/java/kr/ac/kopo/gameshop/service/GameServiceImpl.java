@@ -15,94 +15,99 @@ import kr.ac.kopo.gameshop.pager.Pager;
 
 @Service
 public class GameServiceImpl implements GameService {
-	
-	@Autowired
-	GameDao dao;
-	
-	@Autowired
-	AttachDao attachDao;
 
-	@Override
-	public List<Game> list(Pager pager) {
-		int total = dao.total(pager);
-		
-		pager.setTotal(total);
-		
-		return dao.list(pager);
-	}
+    @Autowired
+    GameDao dao;
 
-	@Override
-	@Transactional
-	public void add(Game item) {
-		dao.add(item);
-		
-		for(Attach attach : item.getAttachs()) {
-			attach.setGameId(item.getId());
-	
-			attachDao.add(attach);
-		}
-	}
+    @Autowired
+    AttachDao attachDao;
 
-	@Override
-	@Transactional
-	public void delete(int id, String memberId) {
-		attachDao.deleteByGameId(id);
+    @Override
+    public List<Game> list(Pager pager) {
+        int total = dao.total(pager);
 
-		dao.delete(id, memberId);
-	}
+        pager.setTotal(total);
 
-	@Override
-	public Game item(int id) {		
-		return dao.item(id);
-	}
+        return dao.list(pager);
+    }
 
-	@Transactional
-	@Override
-	public void update(Game item) {
-		dao.update(item);
+    @Override
+    @Transactional
+    public void add(Game item) {
+        dao.add(item);
 
-		for(Attach attach : item.getAttachs()) {
-			attach.setGameId(item.getId());
+        if (item.getAttachs() != null) {
 
-			attachDao.add(attach);
-		}
-	}
+            for (Attach attach : item.getAttachs()) {
+                attach.setGameId(item.getId());
 
-	@Override
-	public void dummy(String memberId) {
-		for(int count=1; count < 100; count++) {
-			Game item = new Game();
-			
-			item.setTitle("게임명 " + count);			
-			item.setPrice(count * 1000);
-			item.setPubDate(new Date());
-			item.setMemberId(memberId);
-			
-			dao.add(item);
-		}
-	}
+                attachDao.add(attach);
+            }
+        }
+    }
 
-	@Override
-	public void init() {
-		List<Game> list;
-		
-		Pager pager = new Pager();
-		pager.setPerPage(9999);
-		
-		do {
-			list = dao.list(pager);
-						
-			for(Game item : list)
-				dao.delete(item.getId());
-		} while(list.size() > 0);
-	}
+    @Override
+    @Transactional
+    public void delete(int id, String memberId) {
+        attachDao.deleteByGameId(id);
+
+        dao.delete(id, memberId);
+    }
+
+    @Override
+    public Game item(int id) {
+        return dao.item(id);
+    }
+
+    @Transactional
+    @Override
+    public void update(Game item) {
+        dao.update(item);
+
+        if (item.getAttachs() != null) {
+            for (Attach attach : item.getAttachs()) {
+                attach.setGameId(item.getId());
+
+                attachDao.add(attach);
+            }
+        }
+    }
+
+    @Override
+    public void dummy(String memberId) {
+        for (int count = 1; count < 100; count++) {
+            Game item = new Game();
+
+            item.setTitle("게임명 " + count);
+            item.setPrice(count * 1000);
+            item.setPubDate(new Date());
+            item.setMemberId(memberId);
+
+            dao.add(item);
+        }
+    }
+
+    @Override
+    public void init() {
+        List<Game> list;
+
+        Pager pager = new Pager();
+        pager.setPerPage(9999);
+
+        do {
+            list = dao.list(pager);
+
+            for (Game item : list)
+                dao.delete(item.getId());
+        } while (list.size() > 0);
+    }
 
     @Override
     public boolean deleteAttach(int id) {
-        if(attachDao.delete(id))
-			return true;
+        if (attachDao.delete(id))
+            return true;
 
-		else
-			return false;
+        else
+            return false;
     }
 }

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.kopo.gameshop.model.Member;
 import kr.ac.kopo.gameshop.service.MemberService;
 
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 @Controller
 public class RootController {
 	

@@ -83,33 +83,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/login">
-            <div class="modal-body">
-                <div>
+                <div class="modal-body">
                     <div>
-                        <h3>로그인</h3>
-                    </div>
-                    <div>
-                        <form method="post">
-                            <div>
-                                <label>아이디:</label>
-                                <input type="text" name="id" class="form-control">
-                            </div>
+                        <div>
+                            <h3>로그인</h3>
+                        </div>
+                        <div>
+                            <form method="post">
+                                <div>
+                                    <label>아이디:</label>
+                                    <input type="text" name="id" class="form-control">
+                                </div>
 
-                            <div>
-                                <label>비밀번호:</label>
-                                <input type="password" name="passwd" class="form-control">
-                            </div>
+                                <div>
+                                    <label>비밀번호:</label>
+                                    <input type="password" name="passwd" class="form-control">
+                                </div>
 
-                            <div>
-                                <button class="btn btn-sm btn-primary mt-2">로그인</button>
+                                <div>
+                                    <button class="btn btn-sm btn-primary mt-2">로그인</button>
 
-                            </div>
-                        </form>
-                    </div>
-                    <div>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                        </div>
                     </div>
                 </div>
-            </div>
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
@@ -121,6 +121,7 @@
 <ul>
     <li><a href="game/list">게임 관리</a></li>
     <li><a href="publisher/list">게임회사 관리</a></li>
+    <li><a href="/resources/html/publisher.html">게임회사 관리 (REST)</a></li>
 </ul>
 </body>
 </html>

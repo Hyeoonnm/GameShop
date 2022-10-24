@@ -16,7 +16,7 @@ public class GameRestController {
     GameService service;
 
     @GetMapping
-    public List<Game> list(Pager pager){
+    public List<Game> list(Pager pager) {
         return service.list(pager);
 
     }
@@ -37,7 +37,7 @@ public class GameRestController {
 
     @DeleteMapping
     public Game delete(@RequestBody Game item) {
-        service.delete(item.getId(),item.getMemberId());
+        service.delete(item.getId(), item.getMemberId());
 
         return item;
     }

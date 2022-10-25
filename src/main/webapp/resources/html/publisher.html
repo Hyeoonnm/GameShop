@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="kr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/resources/css/pager.css">
 
     <title></title>
 </head>
@@ -27,12 +28,67 @@
             </thead>
 
             <tbody id="list">
-            <tr>
+            <tr id="empty_list">
                 <td colspan="5">검색 된 게임회사가 없습니다</td>
             </tr>
-            
+
             </tbody>
         </table>
+        <div>
+            <button id="add">추가</button>
+        </div>
+    </div>
+
+    <!--add-->
+    <div id="add_modal" class="empty_list modal">
+        <div>
+            <label>회사명:</label>
+            <input type="text" name="name">
+        </div>
+
+        <div>
+            <label>영문명:</label>
+            <input type="text" name="nameEng">
+        </div>
+
+        <div>
+            <label>홈페이지:</label>
+            <input type="text" name="url" placeholder="http://를 제외하고 입력하세요">
+        </div>
+
+        <div>
+            <button class="submit">등록</button>
+            <button class="cancel">취소</button>
+        </div>
+    </div>
+
+
+    <!--update-->
+    <div id="update_modal" class="empty_list modal">
+        <div>
+            <label>회사 번호:</label>
+            <input type="number" name="id" readonly>
+        </div>
+
+        <div>
+            <label>회사명:</label>
+            <input type="text" name="name">
+        </div>
+
+        <div>
+            <label>영문명:</label>
+            <input type="text" name="nameEng">
+        </div>
+
+        <div>
+            <label>홈페이지:</label>
+            <input type="text" name="url" placeholder="http://를 제외하고 입력하세요">
+        </div>
+
+        <div>
+            <button class="submit">변경</button>
+            <button class="cancel">취소</button>
+        </div>
     </div>
 </div>
 

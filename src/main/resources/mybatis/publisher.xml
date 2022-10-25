@@ -3,35 +3,45 @@
 
 <mapper namespace="publisher">
 
-	<select id="total" resultType="Integer">
-		SELECT COUNT(*) FROM publisher
-	</select>
-	
-	<select id="list" resultType="Publisher">
-		SELECT * FROM publisher
-		ORDER BY id DESC
-		LIMIT #{offset}, #{perPage}
-	</select>
-	
-	<insert id="add">
-		INSERT INTO publisher
-		(name, name_eng, url)
-		VALUES (#{name}, #{nameEng}, #{url})
-	</insert>
-	
-	<select id="item" resultType="Publisher">
-		SELECT * FROM publisher
-		WHERE id=#{id}
-	</select>
-	
-	<update id="update">
-		UPDATE publisher
-		SET name=#{name}, name_eng=#{nameEng}, url=#{url}
-		WHERE id=#{id}		
-	</update>
-	
-	<delete id="delete">
-		DELETE FROM publisher
-		WHERE id=#{id}
-	</delete>
+    <select id="total" resultType="Integer">
+        SELECT COUNT(*)
+        FROM publisher
+    </select>
+
+    <select id="list" resultType="Publisher">
+        SELECT *
+        FROM publisher
+        ORDER BY id DESC
+        LIMIT #{offset}, #{perPage}
+    </select>
+
+    <insert id="add">
+        INSERT INTO publisher
+        (name, name_eng, url)
+        VALUES (#{name}, #{nameEng}, #{url})
+
+        <selectKey keyColumn="id" keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="item" resultType="Publisher">
+        SELECT *
+        FROM publisher
+        WHERE id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE publisher
+        SET name=#{name},
+            name_eng=#{nameEng},
+            url=#{url}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM publisher
+        WHERE id = #{id}
+    </delete>
 </mapper>

@@ -60,7 +60,7 @@ $(function () {
         close_modal();
     });
 
-    // add버튼 클릭시 이벤트
+    // add 버튼 클릭시 이벤트
     $("#add").click(e => {
         close_modal();
         $("#add_modal").removeClass("empty_list");

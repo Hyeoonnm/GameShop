@@ -8,7 +8,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title></title>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	<style>
+		a {
+			text-decoration: none;
+		}
+	</style>
+
+	<script>
+		$(function() {
+			$(".bi-heart").css("color","purple");
+			$(".bi-heart-fill").css("color","red");
+
+			$("tbody").on("click", ".bi-heart", e => {
+				const icon = e.target;
+				const game_id = $(icon).data("id");
+
+				$.ajax("wish/" + game_id, {
+					method : "PUT",
+					success : result => {
+						if(result == "OK") {
+							$(icon).removeClass("bi-heart");
+							$(icon).addClass("bi-heart-fill");
+							$(icon).css("color","red");
+						} else {
+							alert("즐겨찾기 등록에 실패하였습니다.");
+						}
+
+					},
+					error : result => {
+						alert("즐겨 찾기는 로그인 이후에 가능합니다");
+					}
+				})
+
+			});
+
+			$("tbody").on("click", ".bi-heart-fill", e => {
+				const icon = e.target;
+				const game_id = $(icon).data("id");
+
+				$.ajax("wish/" + game_id, {
+					method : "DELETE",
+					success : result => {
+						if(result == "OK") {
+							$(icon).removeClass("bi-heart-fill");
+							$(icon).addClass("bi-heart");
+							$(icon).css("color","purple");
+						} else {
+							alert("즐겨찾기 삭제에 실패하였습니다.");
+						}
+
+					},
+					error : result => {
+						alert("즐겨 찾기는 로그인 이후에 가능합니다");
+					}
+				})
+
+			});
+		});
+	</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -41,7 +101,7 @@
 					<c:forEach var="item" items="${list}">
 						<tr>
 							<td>${item.id}</td>
-							<td><a href="detail/${item.id}">${item.title}</a></td>
+							<td><i data-id = "${item.id}" class="bi bi-heart${item.wish > 0 ? '-fill' : ''}"></i> ${item.wish} <a href="detail/${item.id}">${item.title}</a></td>
 							<td>${item.publisher}</td>
 							<td>${item.price}</td>
 							<td><fmt:formatDate value="${item.pubDate}" pattern="yyyy-MM-dd"/></td>

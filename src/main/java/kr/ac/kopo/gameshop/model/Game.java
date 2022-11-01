@@ -24,6 +24,16 @@ public class Game {
 	
 	private String name;
 	private String publisher;
+
+	private int wish;
+
+	public int getWish() {
+		return wish;
+	}
+
+	public void setWish(int wish) {
+		this.wish = wish;
+	}
 	
 	public String getPublisher() {
 		return publisher;

@@ -9,10 +9,12 @@
     </select>
 
     <select id="list" resultType="Game">
-        SELECT game.*, member.name, publisher.name publisher
+        SELECT game.*, member.name, publisher.name publisher, COUNT(wish.game_id) wish
         FROM game
                  LEFT JOIN member ON game.member_id = member.id
                  LEFT JOIN publisher ON game.publisher_id = publisher.id
+                 LEFT JOIN wish ON game.id = wish.game_id
+        GROUP BY game.id
         ORDER BY id
         LIMIT ${offset}, ${perPage}
     </select>
@@ -68,4 +70,15 @@
         WHERE id=#{id} AND member_id=#{memberId}
     </update>
 
+    <insert id="wish_add">
+        INSERT INTO wish
+        VALUES (#{gameId}, #{memberId})
+    </insert>
+
+    <delete id="wish_delete">
+        DELETE
+        FROM wish
+        WHERE game_id = #{gameId}
+          AND member_id = #{memberId}
+    </delete>
 </mapper>

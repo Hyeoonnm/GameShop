@@ -8,6 +8,7 @@ import kr.ac.kopo.gameshop.model.Publisher;
 import kr.ac.kopo.gameshop.pager.Pager;
 import kr.ac.kopo.gameshop.service.GameService;
 import kr.ac.kopo.gameshop.service.PublisherService;
+import kr.ac.kopo.gameshop.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,28 @@ public class GameController {
     GameService service;
 
     @Autowired
+    WishService wishService;
+
+    @Autowired
     PublisherService publisherService;
+
+    @PutMapping("/wish/{id}")
+    @ResponseBody
+    public String addWish(@PathVariable int id, @SessionAttribute Member member) {
+        if(wishService.add(id, member.getId()))
+            return "OK";
+
+        return "FAIL";
+    }
+
+    @DeleteMapping("/wish/{id}")
+    @ResponseBody
+    public String deleteWish(@PathVariable int id, @SessionAttribute Member member) {
+        if(wishService.delete(id, member.getId()))
+            return "OK";
+
+        return "FAIL";
+    }
 
     @RequestMapping("/delete_attach/{id}")
     @ResponseBody

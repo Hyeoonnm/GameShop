@@ -9,7 +9,7 @@
         VALUES (#{filename}, #{gameId})
     </insert>
 
-    <delete id="delete_gameid">
+    <delete id="delete_gameId">
         DELETE
         FROM attach
         WHERE game_id = #{id}

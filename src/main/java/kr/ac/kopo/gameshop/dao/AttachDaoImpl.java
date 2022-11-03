@@ -23,7 +23,7 @@ public class AttachDaoImpl implements AttachDao {
     @Override
     public void deleteByGameId(int id) {
 
-        sql.delete("attach.delete_gameid", id);
+        sql.delete("attach.delete_gameId", id);
     }
 
     @Override

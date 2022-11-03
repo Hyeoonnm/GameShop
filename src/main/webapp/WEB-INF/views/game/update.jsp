@@ -37,12 +37,12 @@
             });
         });
 
-        $("#attachs").on("click", ".delete", function() {
+        $("#attachs").on("click", ".delete", function () {
             const div = $(this).closest(".input-group");
             div.remove();
         });
 
-        $("#add").click(function() {
+        $("#add").click(function () {
             const div = $("<div>");
             div.addClass("input-group");
             div.addClass("mb-3");
@@ -122,7 +122,9 @@
                             <div>
                                 <p>첨부파일 ${attach.filename}</p>
                                 <li>
-                                    <button type="button" class="btn btn -sm btn-danger delete" data-id="${attach.id}">삭제</button>
+                                    <button type="button" class="btn btn -sm btn-danger delete" data-id="${attach.id}">
+                                        삭제
+                                    </button>
                                 </li>
                             </div>
                         </c:forEach>
@@ -131,7 +133,9 @@
             </div>
 
             <div class="form-group">
-                <label>첨부파일:<button type="button" id="add" class="btn btn-sm btn-primary">추가</button></label>
+                <label>첨부파일:
+                    <button type="button" id="add" class="btn btn-sm btn-primary">추가</button>
+                </label>
                 <div id="attachs">
 
                     <div class="form-group">
@@ -145,6 +149,8 @@
                             <button type="button" class="btn btn-sm btn-secondary">취소</button>
                         </a>
                     </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>
